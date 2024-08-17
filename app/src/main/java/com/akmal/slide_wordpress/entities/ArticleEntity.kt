@@ -9,7 +9,6 @@ data class ArticleEntity(
     val title: String,
     val categories: List<Int>, // Menyimpan ID kategori sebagai string yang dipisahkan koma
     val featured_media: Int,
-//    val timestamp: Long // Tambahkan timestamp untuk penanganan konflik data
 )
 
 @Entity(tableName = "categories")
