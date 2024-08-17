@@ -1,5 +1,6 @@
 package com.akmal.slide_wordpress.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +25,11 @@ class ArticleAdapter(
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = articles[position]
         holder.binding.tvTitle.text = article.title.rendered
-        holder.binding.tvCategory.text = article.categories.joinToString { categoriesMap[it] ?: "Unknown" }
+        holder.binding.tvCategory.text = article.categories.joinToString { categoryId ->
+            val categoryName = categoriesMap[categoryId] ?: "Unknown"
+            Log.d("ArticleAdapter", "Category ID: $categoryId, Name: $categoryName")
+            categoryName
+        }
 
         Glide.with(holder.itemView.context)
             .load(mediaMap[article.featured_media])

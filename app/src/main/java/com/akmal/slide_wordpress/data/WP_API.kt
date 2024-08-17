@@ -16,5 +16,5 @@ interface WordPressApi {
     fun getMedia(@Path("id") id: Int): Call<Media>
 
     @GET("wp-json/wp/v2/categories")
-    fun getCategories(): Call<List<Category>>
+    fun getCategories(@Query("per_page")perPage: Int): Call<List<Category>>
 }

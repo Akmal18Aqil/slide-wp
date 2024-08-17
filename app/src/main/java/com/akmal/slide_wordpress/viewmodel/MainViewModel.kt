@@ -26,7 +26,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val media = appDao.getAllMedia()
 
     val categoriesMap: LiveData<Map<Int, String>> = categories.map { list ->
-        list.associate { it.id to it.name }
+        val map = list.associate { it.id to it.name }
+        Log.d("MainViewModel", "categoriesMap: $map")
+        map
     }
 
     val mediaMap: LiveData<Map<Int, String>> = media.map { list ->
@@ -47,7 +49,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private fun fetchCategories() {
         viewModelScope.launch {
             try {
-                val response = withContext(Dispatchers.IO) { api.getCategories().execute() }
+                val response = withContext(Dispatchers.IO) { api.getCategories(perPage = 70).execute() }
                 if (response.isSuccessful) {
                     val categories = response.body() ?: emptyList()
                     val categoryEntities = categories.map { CategoryEntity(it.id, it.name) }
